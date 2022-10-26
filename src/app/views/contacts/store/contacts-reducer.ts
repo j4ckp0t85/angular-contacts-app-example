@@ -1,6 +1,6 @@
 import { Contact } from '@app/core/models';
-import {EntityState, createEntityAdapter} from '@ngrx/entity';
-import {createReducer, on} from '@ngrx/store';
+import { EntityState, createEntityAdapter } from '@ngrx/entity';
+import { createReducer, on } from '@ngrx/store';
 import {
   createSuccess,
   loadAllSuccess,
@@ -29,25 +29,25 @@ export interface State extends EntityState<Contact> {
   // additional props here
 }
 
-export const INIT_STATE: State = contactsAdapter.getInitialState({
+const INIT_STATE: State = contactsAdapter.getInitialState({
   // additional props default values here
 });
 
 export const reducer = createReducer<State>(
   INIT_STATE,
-  on(loadAllSuccess, (state, {contacts}) =>
-    contactsAdapter.addAll(contacts, state)
+  on(loadAllSuccess, (state, { contacts }) =>
+    contactsAdapter.addMany(contacts, state)
   ),
-  on(loadSuccess, (state, {contact}) =>
+  on(loadSuccess, (state, { contact }) =>
     contactsAdapter.upsertOne(contact, state)
   ),
-  on(createSuccess, (state, {contact}) =>
+  on(createSuccess, (state, { contact }) =>
     contactsAdapter.addOne(contact, state)
   ),
-  on(updateSuccess, (state, {contact}) =>
-    contactsAdapter.updateOne({id: contact.id, changes: contact}, state)
+  on(updateSuccess, (state, { contact }) =>
+    contactsAdapter.updateOne({ id: contact.id, changes: contact }, state)
   ),
-  on(removeSuccess, (state, {id}) =>
+  on(removeSuccess, (state, { id }) =>
     contactsAdapter.removeOne(id, state)
   )
 );

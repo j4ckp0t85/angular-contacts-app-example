@@ -1,4 +1,5 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import { ContactsStoreFacade } from './../../../views/contacts/store/contacts.store-facade';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Contact } from '@app/core/models';
 
 @Component({
@@ -17,9 +18,11 @@ export class ContactListComponent implements OnInit {
 
   contactsTrackByFn = (index: number, contact: Contact) => contact.id;
 
-  constructor() {}
+  constructor(private store: ContactsStoreFacade) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.store.loadAll();
+  }
 
 
   showDetails(contact: Contact) {

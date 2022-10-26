@@ -16,7 +16,8 @@ export class ContactsIndexComponent implements OnInit {
 
   constructor(private contactsFacade: ContactsStoreFacade, private router: Router) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
   editContact(contact: Contact) {
     this.router.navigate(['/contacts', contact.id, 'edit']);

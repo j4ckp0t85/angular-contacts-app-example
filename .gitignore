@@ -6,6 +6,7 @@
 /out-tsc
 data
 volumes
+.angular
 
 # dependencies
 /node_modules

@@ -1,10 +1,11 @@
+import { loadAll } from './contacts-actions';
 import { Injectable } from '@angular/core';
 import * as fromRoot from '@app/root-store';
 import * as fromContacts from '@app/contacts-store';
 import { select, Store } from '@ngrx/store';
 
 import { Contact } from '@app/core/models';
-import {create, load, remove, update} from '@app/contacts-store/contacts-actions';
+import { create, load, remove, update } from '@app/contacts-store/contacts-actions';
 
 @Injectable()
 export class ContactsStoreFacade {
@@ -13,27 +14,37 @@ export class ContactsStoreFacade {
     select(fromContacts.getAllContacts)
   );
 
-  constructor(private store: Store<fromRoot.State>) { }
+  /*
+    contacts$ = this.store.select(fromContacts.getAllContacts);
+  */
+
+  constructor(private store: Store<fromRoot.State>) {
+    this.loadAll(); // al posto di definire lo startWith nell'effect
+  }
+
+  loadAll() {
+    this.store.dispatch(loadAll());
+  }
 
   loadContact(id: number) {
-    this.store.dispatch(load({id}));
+    this.store.dispatch(load({ id }));
   }
 
   createContact(contact: Contact) {
-    this.store.dispatch(create({contact}));
+    this.store.dispatch(create({ contact }));
   }
 
   updateContact(contact: Contact) {
-    this.store.dispatch(update({contact}));
+    this.store.dispatch(update({ contact }));
   }
 
   deleteContact(id: number) {
-    this.store.dispatch(remove({id}));
+    this.store.dispatch(remove({ id }));
   }
 
   getContactById(id: number) {
     return this.store.pipe(
       select(fromContacts.getContactById(id))
-    )
+    );
   }
 }

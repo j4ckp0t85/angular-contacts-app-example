@@ -1,5 +1,5 @@
 import * as fromContacts from './contacts-reducer';
-import {Action, combineReducers, createFeatureSelector, createSelector} from '@ngrx/store';
+import { Action, combineReducers, createFeatureSelector, createSelector } from '@ngrx/store';
 
 export interface ContactsState {
   contacts: fromContacts.State;
@@ -9,7 +9,7 @@ export interface ContactsState {
 export function reducers(state: ContactsState | undefined, action: Action) {
   return combineReducers({
     contacts: fromContacts.reducer
-  })(state, action)
+  })(state, action);
 }
 
 
@@ -28,6 +28,12 @@ export const getContactsEntitiesState = createSelector(
 export const {
   selectAll: getAllContacts,
 } = fromContacts.contactsAdapter.getSelectors(getContactsEntitiesState);
+
+// const { selectAll } = fromContacts.contactsAdapter.getSelectors();
+// export const getAllContactsv2 = createSelector(
+//   getContactsEntitiesState,
+//   state => selectAll(state)
+// );
 
 export const getContactById = (id: number) => createSelector(
   getContactsEntitiesState,
